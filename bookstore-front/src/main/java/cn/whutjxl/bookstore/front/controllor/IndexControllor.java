@@ -1,7 +1,9 @@
 package cn.whutjxl.bookstore.front.controllor;
 
 import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import com.jfinal.core.Controller;
@@ -15,8 +17,12 @@ import cn.whutjxl.bookstore.user.service.UserService;
 public class IndexControllor extends Controller {
 
 	public void index(){
-		setAttr("bookPage", BookService.getAllBooks(getParaToInt("page", 1), 25, getPara("condition", ""))); 
+		Map<String, String> map=new HashMap<String, String>();
+		map.put("condition", getPara("condition", ""));
+		map.put("category", getPara("category", ""));
+		setAttr("bookPage", BookService.getAllBooks(getParaToInt("page", 1), 25, map)); 
 		setAttr("condition",  getPara("condition", ""));
+		setAttr("category",  getPara("category", ""));
 		render("index.html");
 	}
 	

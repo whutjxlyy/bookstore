@@ -1,6 +1,8 @@
 package cn.whutjxl.bookstore.admin.controllor;
 
 import java.sql.Timestamp;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.jfinal.core.Controller;
 import com.jfinal.kit.PathKit;
@@ -19,8 +21,12 @@ public class BookController extends Controller {
 			setAttr("msg", "请先登录！");
 			render("/WEB-INF/pages/index/login.html");
 		} else {
-			setAttr("bookPage", BookService.getAllBooks(getParaToInt("page", 1), 25, getPara("condition", "")));
+			Map<String, String> map=new HashMap<String, String>();
+			map.put("condition", getPara("condition", ""));
+			map.put("category", getPara("category", ""));
+			setAttr("bookPage", BookService.getAllBooks(getParaToInt("page", 1), 25, map));
 			setAttr("condition", getPara("condition", ""));
+			setAttr("category", getPara("category", ""));
 			render("list.html");
 		}
 	}
@@ -40,6 +46,7 @@ public class BookController extends Controller {
 		Book book=getModel(Book.class);
 		Integer bid=book.getInt("bid");
 		String bname=book.getStr("bname");
+		String category=book.getStr("category");
 		Double price=book.getDouble("price");
 		String author=book.getStr("author");
 		String content=book.getStr("content");
@@ -53,6 +60,9 @@ public class BookController extends Controller {
 		}else if(author==null||"".equals(author)){
 			setAttr("msg", "作者不能为空！");
 			render("edit.html");
+		}else if(category==null||"".equals(category)){
+			setAttr("msg", "类别不能为空！");
+			render("edit.html");
 		}else if(content==null||"".equals(content)){
 			setAttr("msg", "简介不能为空！");
 			render("edit.html");
@@ -65,6 +75,7 @@ public class BookController extends Controller {
 				newBook.set("bname", bname);
 				newBook.set("price", price);
 				newBook.set("author", author);
+				newBook.set("category", category);
 				newBook.set("content", content);
 				newBook.set("stock", stock);
 				newBook.set("createTime", new Timestamp(System.currentTimeMillis()));
@@ -79,6 +90,7 @@ public class BookController extends Controller {
 				oldBook.set("bname", bname);
 				oldBook.set("price", price);
 				oldBook.set("author", author);
+				oldBook.set("category", category);
 				oldBook.set("content", content);
 				oldBook.set("stock", stock);
 				oldBook.set("updateTime", new Timestamp(System.currentTimeMillis()));
@@ -90,7 +102,7 @@ public class BookController extends Controller {
 				BookService.updateBook(oldBook);
 				setAttr("msg", "修改成功！");
 			}
-			String dPath="E:\\JavaApplication\\bookstore\\bookstore-front\\src\\main\\webapp\\images\\books\\";
+			String dPath=filePath.replace("bookstore-admin", "bookstore-front");
 			FileUtils.copyfile(filePath, dPath, upfile.getFileName());
 			render("edit.html");
 		}

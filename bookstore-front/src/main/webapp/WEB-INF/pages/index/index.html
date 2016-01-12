@@ -1,0 +1,40 @@
+<#include "/WEB-INF/pages/common/_layout.html" />
+<@layout>
+<div style="width: 56%;height: 35px;margin-left: 22%;background-color: #3e79d7;position: absolute;border: solid 1px #3e79d7;">
+	<form action="/" method="post">
+		<input type="hidden" name="page" value="1">
+		<input  style="width: 86%;height: 33px;border: solid 1px #3e79d7;" type="text" name="condition" value="${(condition)!''}" title="请输入书名！" placeholder="请输入书名！"><input style="width: 13%;height: 33px;border: solid 1px #3e79d7;background-color: #3e79d7;cursor: pointer;" type="submit" value="搜索">
+	</form>
+</div>
+<div style="width: 50%;margin-left: 40%;position: absolute;top:60px;">
+	<#include "/WEB-INF/pages/common/_paginate.html" />
+	<@paginate currentPage=bookPage.pageNumber totalPage=bookPage.totalPage actionUrl="/index"  urlParas="&condition=${(condition)!''}"/>
+</div>
+
+<div style="width:94%;margin-left: 3%;position: absolute;left: 0;top: 90px;">
+
+<#if ((bookPage.getList())?size>0)>
+
+<#list bookPage.getList() as x>
+	<a href="/showDetail?bid=${(x.bid)!''}">
+	<div style="width: 195px;height: 300px;float: left;border: solid 1px #788b86; margin: 10px;cursor: pointer;">
+		<div>
+			<img alt="" src="/images/books/${(x.pic)!'null.jpg'}" style="width: 180px;height: 200px;margin: 5px; position: absolute;border: solid 1px #788b86;">
+		</div>
+		<div style="margin-top: 210px;margin-left: 10px;margin-right: 10px;border: solid 1px #788b86;">
+			<span style="color: red;font-weight: bold;font-size: 20px">￥${(x.price)!''}</span><br><spans></span>
+			<span>${(x.bname)!''}</span><br>
+			<span>${(x.author)!''}</span>
+		</div>
+	</div>
+	</a>
+</#list>
+<#else>
+<div>
+<span style="color: red;font-size: 25px;">没有书籍记录！</span>
+</div>
+</#if>
+
+</div>
+</@layout>
+

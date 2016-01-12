@@ -1,0 +1,225 @@
+<#include "/WEB-INF/pages/common/_layout.html" /> <@layout>
+<script type="text/javascript">
+$(function(){
+	$('#select').children().click(function(){
+		$(this).addClass("current").siblings().removeClass("current");
+		$('#show').children().eq($(this).index()).css("display","block").siblings().css("display","none");
+	});
+	
+	$('#conf').click(function(){
+		if(confirm("确认收货可能人财两空，是否确认?")){
+			return true;
+		}else{
+			return false;
+		}
+	});
+});
+</script>
+<div  
+	style="width: 80%; margin-left: 10%; margin-top: 10px; border: solid 1px #ADADAD;">
+	当前位置：我的订单
+	<hr>
+	<br>
+	<div style="background-color: #cfdef5;width: 60%;margin-left: 20%;">
+		<div id="select" style="width: 100%;height: 30px;border-collapse: collapse;">
+			<div class="current" style="width: 33%;height: 28px;float: left;text-align: center;">
+				<font style="font-size: 22px;cursor: pointer;">待发货</font>
+			</div>
+			<div style="width: 34%;height: 28px;float: left;text-align: center;">
+				<font style="font-size: 22px;cursor: pointer;">待收货</font>
+			</div>
+			<div style="width: 33%;height: 28px;float: left;text-align: center;">
+				<font style="font-size: 22px;cursor: pointer;">已完成</font>
+			</div>
+		</div>
+	</div>
+	<br>
+	<div id="show">
+		
+	<div style="display: block;">	
+	
+	<#if (orderList1)?? && (orderList1?size>0)>
+	
+	<!-- 待发货 -->
+	<#list orderList1 as order1>
+	<div style="background-color: #ECF5FF;width: 100%;height: 30px;">
+		<span style="margin-top: 6px;position: absolute;margin-left: 5px;">订单编号：${(order1.oid)!''} &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+		<font style="color: red;">总计：￥${(order1.total)!''}</font>
+		</span>
+		<div style="position: absolute;margin-top: 6px;margin-left: 60%">
+			<a href="javascript:;"></a>
+		</div>
+	</div>
+	<div style="background-color: #ECF5FF;width: 100%;height: 30px;">
+		<span style="margin-top: 6px;position: absolute;margin-left: 5px;">收货人：${(order1.uname)!''} &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+		联系电话：${(order1.tel)!''}
+		</span>
+	</div>
+	<div style="background-color: #ECF5FF;width: 100%;height: 30px;">
+		<span style="margin-top: 6px;position: absolute;margin-left: 5px;">收货地址：${(order1.addr)!''}
+		</span>
+	</div>
+	<table style="width: 100%">
+		<thead>
+			<tr style="background-color: #ACD6FF;height: 20px">
+				<th style="width: 30%;">图片</th>
+				<th style="width: 30%;">书名</th>
+				<th style="width: 10%;">价格</th>
+				<th style="width: 10%;">数量</th>
+				<th style="width: 10%;">小计</th>
+			</tr>
+		</thead>
+		<tbody>
+			<#list order1.getAllItems() as item1 >		
+			<tr>
+				<td style="width: 30%;"><div>
+						<img src="/images/books/${(item1.getBook().pic)!'null.jpg'}">
+					</div></td>
+				<td style="width: 30%;"><div>${(item1.getBook().bname)!''}</div></td>
+				<td style="width: 15%;"><div>
+						<span style="color: red;">￥${(item1.getBook().price)!''}</span>
+					</div></td>
+				<td style="width: 10%;"><div>${(item1.count)!''}</div></td>
+				<td style="width: 15%;"><div>
+						<span style="color: red;">${(item1.subTotal)!''}</span>
+					</div></td>
+			</tr>
+			</#list>
+		</tbody>
+	</table>
+	<br> <br>
+	</#list>
+	
+	 <br>
+	<br> <br> <br>
+	<#else>
+		<span style="color: red;font-size: 20px;">暂无相关记录！</span>
+	</#if>
+</div>
+	
+	
+	
+	<div style="display: none;">
+	<#if (orderList2)?? && (orderList2?size>0)>
+	
+	<!-- 待收货 -->
+	<#list orderList2 as order2>
+	<div style="background-color: #ECF5FF;width: 100%;height: 30px;">
+		<span style="margin-top: 6px;position: absolute;margin-left: 5px;">订单编号：${(order2.oid)!''} &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+		<font style="color: red;">总计：￥${(order2.total)!''}</font>
+		</span>
+		<div style="position: absolute;margin-top: 6px;margin-left: 60%">
+			<a href="/order/confirm?oid=${(order2.oid)!''}" id="conf">确认收货</a>
+		</div>
+	</div>
+	<div style="background-color: #ECF5FF;width: 100%;height: 30px;">
+		<span style="margin-top: 6px;position: absolute;margin-left: 5px;">收货人：${(order2.uname)!''} &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+		联系电话：${(order2.tel)!''}
+		</span>
+	</div>
+	<div style="background-color: #ECF5FF;width: 100%;height: 30px;">
+		<span style="margin-top: 6px;position: absolute;margin-left: 5px;">收货地址：${(order2.addr)!''}
+		</span>
+	</div>
+	<table style="width: 100%">
+		<thead>
+			<tr style="background-color: #ACD6FF;height: 20px">
+				<th style="width: 30%;">图片</th>
+				<th style="width: 30%;">书名</th>
+				<th style="width: 10%;">价格</th>
+				<th style="width: 10%;">数量</th>
+				<th style="width: 10%;">小计</th>
+			</tr>
+		</thead>
+		<tbody>
+		<#list order2.getAllItems() as item2>
+			<tr>
+				<td style="width: 30%;"><div>
+						<img src="/images/books/${(item2.getBook().pic)!'null.jpg'}">
+					</div></td>
+				<td style="width: 30%;"><div>${(item2.getBook().bname)!''}</div></td>
+				<td style="width: 15%;"><div>
+						<span style="color: red;">￥${(item2.getBook().price)!''}</span>
+					</div></td>
+				<td style="width: 10%;"><div>${(item2.count)!''}</div></td>
+				<td style="width: 15%;"><div>
+						<span style="color: red;">${(item2.subTotal)!''}</span>
+					</div></td>
+			</tr>
+		</#list>
+		</tbody>
+	</table>
+	<br> <br> 
+	</#list>
+	<br>
+	<br> <br> <br>
+	<#else>
+		<span style="color: red;font-size: 20px;">暂无相关记录！</span>
+	</#if>
+	</div>
+	
+	
+	<div style="display: none;">
+	
+	<#if (orderList3)?? && (orderList3?size>0)>
+	
+	<!-- 已完成 -->
+	<#list orderList3 as order3>
+	<div style="background-color: #ECF5FF;width: 100%;height: 30px;">
+		<span style="margin-top: 6px;position: absolute;margin-left: 5px;">订单编号：${(order3.oid)!''} &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+		<font style="color: red;">总计：￥${(order3.total)!''}</font>
+		</span>
+		<div style="position: absolute;margin-top: 6px;margin-left: 60%">
+			<a href="javascript:;"></a>
+		</div>
+	</div>
+	<div style="background-color: #ECF5FF;width: 100%;height: 30px;">
+		<span style="margin-top: 6px;position: absolute;margin-left: 5px;">收货人：${(order3.uname)!''} &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+		联系电话：${(order3.tel)!''}
+		</span>
+	</div>
+	<div style="background-color: #ECF5FF;width: 100%;height: 30px;">
+		<span style="margin-top: 6px;position: absolute;margin-left: 5px;">收货地址：${(order3.addr)!''}
+		</span>
+	</div>
+	<table style="width: 100%">
+		<thead>
+			<tr style="background-color: #ACD6FF;height: 20px">
+				<th style="width: 30%;">图片</th>
+				<th style="width: 30%;">书名</th>
+				<th style="width: 10%;">价格</th>
+				<th style="width: 10%;">数量</th>
+				<th style="width: 10%;">小计</th>
+			</tr>
+		</thead>
+		<tbody>
+		<#list order3.getAllItems() as item3>
+			<tr>
+				<td style="width: 30%;"><div>
+						<img src="/images/books/${(item3.getBook().pic)!'null.jpg'}">
+					</div></td>
+				<td style="width: 30%;"><div>${(item3.getBook().bname)!''}</div></td>
+				<td style="width: 15%;"><div>
+						<span style="color: red;">￥${(item3.getBook().price)!''}</span>
+					</div></td>
+				<td style="width: 10%;"><div>${(item3.count)!''}</div></td>
+				<td style="width: 15%;"><div>
+						<span style="color: red;">${(item3.subTotal)!''}</span>
+					</div></td>
+			</tr>
+		</#list>
+		</tbody>
+	</table>
+	<br> <br> 
+	</#list>
+	<br>
+	<br> <br> <br>
+	<#else>
+		<span style="color: red;font-size: 20px;">暂无相关记录！</span>
+	</#if>
+	</div>
+
+	</div>
+	
+</div>
+</@layout>

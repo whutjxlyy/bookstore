@@ -1,0 +1,38 @@
+<#include "/WEB-INF/pages/common/_layout.html" /> <@layout>
+<script type="text/javascript">
+$(function(){
+	$('#regist_reset').click(function(){
+		$('.regist').each(function(){
+			$(this).val("");
+		});
+	});
+});
+</script>
+<div
+	style="margin-left: 30%; margin-top: 30px; width: 40%; height: 450px; border: solid 1px #ADADAD;">
+	<br>
+	<h1 style="margin-left: 40%">注&nbsp册</h1>
+	<form action="regist" method="post">
+		<div
+			style="width: 80%; height: 50%; margin-left: 15%; margin-top: 3%;">
+			<span style="font-size: 22px;"><b>用户名：</b></span><input class="regist" type="text"
+				name="user.username" value="${(user.username)!''}" style="width: 180px; height: 20px;"><span style="color: red;">*</span><br><br>
+			<span style="font-size: 22px;"><b>密&nbsp码：</b></span><input class="regist"
+				type="password" name="password1" value="${(password1)!''}" style="width: 180px; height: 20px;"><span style="color: red;">*</span><br><br>
+			<span style="font-size: 17.5px;"><b>确认密码：</b></span><input class="regist"
+				type="password" name="password2" value="${(password2)!''}" style="width: 180px; height: 20px;"><span style="color: red;">*</span><br><br>
+			<span style="font-size: 22px;"><b>手机号：</b></span><input class="regist"
+				type="tel" name="user.tel" value="${(user.tel)!''}" style="width: 180px; height: 20px;"><span style="color: red;">*</span><br><br>
+			<span style="font-size: 22px;"><b>邮&nbsp箱：</b></span><input class="regist"
+				type="email" name="user.email" value="${(user.email)!''}" style="width: 180px; height: 20px;"><span style="color: red;">*</span><br><br>
+			<span style="font-size: 22px;"><b>地&nbsp址：</b></span><input class="regist"
+				type="text" name="user.addr" value="${(user.addr)!''}" style="width: 180px; height: 20px;"><span style="color: red;">*</span><br><br>
+				
+				<span style="color: red;font-size: 20px;margin-left: 80px;">${(msg)!''}</span><br><br>
+				
+				<input type="submit" value="注册" style="width: 50px; height: 30px;margin-left: 28%">&nbsp
+				<input id="regist_reset" type="button" value="重置" style="width: 50px; height: 30px">
+		</div>
+	</form>
+</div>
+</@layout>

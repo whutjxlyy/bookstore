@@ -1,0 +1,49 @@
+<#macro layout>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>三联书店欢迎您！</title>
+<link href="/images/common/logo.jpg" rel="icon" type="image/x-icon">
+<script src="/js/jquery.js" type="text/javascript"></script>
+<style type="text/css">
+* {margin: 0px;padding: 0px;}
+table {border-collapse: collapse;text-align: center;}
+table,th,td {border: solid 1px #ADADAD;}
+.current {background-color: #0080FF}
+</style>
+<script type="text/javascript">
+$(function(){
+	$('.selector').click(function(){
+		$(this).addClass("current").parent().siblings().children().removeClass("current");
+	});
+});
+</script>
+</head>
+<body style=" background-color: #F0F0F0;">
+<div>
+	<div style="left: 0;top: 0;width: 100%;height: 130px;position: absolute;background-color: #3e79d7">
+		<img  style="left: 0;top: 0;width: 100%;height: 130px;position: absolute; z-index: 1"  alt="" src="/images/common/img_head.jpg">
+	</div>
+	
+	<div style="left: 0;top: 130px;width: 100%;height: 30px;position: absolute;background-color: #cfdef5;">
+		<div style="margin-left:70%; margin-top: 6px;float: left;">
+			${(session["user"].username)!''},欢迎进入三联书店管理后台！ &nbsp&nbsp&nbsp<a href="/logout">退出</a>
+		</div>
+	</div>
+	
+	<div style="width: 1px;height:665px;left: 12%;top: 0px;border-left: solid 5px #cfdef5;position: fixed;"></div>
+	<div style="left: 0;top: 170px;width: 100%;position: absolute;">
+		<div style="width: 12%;height: 300px;float: left;">
+			<a href="/book"><div style="background-color: #cfdef5;"><div class="selector" style="width: 100%;height: 40px;cursor: pointer;"><span style="margin-top: 6px;margin-left: 28px;position: absolute;font-size: 25px;">图书管理</span></div></div></a>
+			<a href="/order"><div style="background-color: #cfdef5;"><div class="selector" style="width: 100%;height: 40px;cursor: pointer;margin-top: 10px;"><span style="margin-top: 6px;margin-left: 28px;position: absolute;font-size: 25px;">订单管理</span></div></div></a>
+			<a href="/user"><div style="background-color: #cfdef5;"><div class="selector" style="width: 100%;height: 40px;cursor: pointer;margin-top: 10px;"><span style="margin-top: 6px;margin-left: 28px;position: absolute;font-size: 25px;">用户管理</span></div></div></a>
+		</div>
+		<div style="width: 87%;float: left;margin-left: 12%;position: absolute;">
+			<#nested>
+		</div>
+	</div>
+</div>
+</body>
+</html>
+</#macro>

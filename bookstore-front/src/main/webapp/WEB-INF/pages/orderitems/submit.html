@@ -1,0 +1,38 @@
+<#include "/WEB-INF/pages/common/_layout.html" /> <@layout>
+<script type="text/javascript">
+	$(function(){
+		$('#reset').click(function(){
+			$('#txt_name').val("");
+			$('#txt_tel').val("");
+			$('#txt_addr').val("");
+		});
+	});
+</script>
+<div
+	style="width: 80%; margin-left: 10%; margin-top: 10px; border: solid 1px #ADADAD;">
+	当前位置：收货信息
+	<hr>
+	<br>
+	<div style="width: 60%;height: 400px;border: solid 1px #ADADAD;margin-left: 20%">
+	<form action="/orderitem/toOrder" method="post">
+		<div style="width: 90%;height: 90%;margin-left: 5%;margin-top: 5%">
+		<span style="color: red">请填写详细的收货信息！</span>
+		<br><br><br>
+			<span style="font-size: 22px;">收货人：</span><input type="text" id="txt_name"
+				name="uname" value="${(uname)!''}" style="width: 180px; height: 20px;"><span style="color: red;">*</span><br><br>
+			<span style="font-size: 22px;">手机号：</span><input id="txt_tel"
+				type="tel" name="tel" value="${(tel)!''}" style="width: 180px; height: 20px;"><span style="color: red;">*</span><br><br>
+			<span style="font-size: 22px;">地&nbsp址：</span><input id="txt_addr"
+				type="text" name="addr" value="${(addr)!''}" style="width: 400px; height: 20px;"><span style="color: red;">*</span><br><br>
+			<input type="submit" value="确认提交" style="font-size: 22px;margin-left: 10%">
+			<input type="button" id="reset" value="  重   置   " style="font-size: 22px;margin-left: 20%">
+		</div>	
+	</form>
+	<br>
+	<br>
+	<br>
+	<br>
+	<span style="color: red;font-size: 20px">${(msg)!''}</span>
+	</div>
+</div>
+</@layout>

@@ -1,0 +1,71 @@
+<#include "/WEB-INF/pages/common/_layout.html" /> <@layout>
+<script type="text/javascript">
+	$(function(){
+		$('#deleteId').click(function(){
+			if(confirm("确定删除吗?")){
+				return true;
+			}else{
+				return false;
+			}
+		});
+	});
+</script>
+<div
+	style="width: 80%; margin-left: 10%; margin-top: 10px; border: solid 1px #ADADAD;">
+	当前位置：我的购物车
+	<hr>
+	<br>
+	<table style="width: 100%">
+		<#assign total=0>
+		<#if (orderItemList)?? && (orderItemList?size>0)>
+	
+		<thead>
+			<tr style="background-color: #ACD6FF">
+				<th style="width: 30%;">图片</th>
+				<th style="width: 30%;">书名</th>
+				<th style="width: 10%;">价格</th>
+				<th style="width: 10%;">数量</th>
+				<th style="width: 10%;">小计</th>
+				<th style="width: 10%;">操作</th>
+			</tr>
+		</thead>
+		<tbody>
+		
+			<#list orderItemList as x>
+				<tr>
+					<td style="width: 30%;"><div>
+							<img src="/images/books/${(x.getBook().pic)!'null.jpg'}">
+						</div></td>
+					<td style="width: 30%;"><div>${(x.getBook().bname)!''}</div></td>
+					<td style="width: 10%;"><div>
+							<span style="color: red;">￥${(x.getBook().price)!''}</span>
+						</div></td>
+					<td style="width: 10%;"><div>${(x.count)!''}</div></td>
+					<td style="width: 10%;"><div>
+							<span style="color: red;">${(x.subTotal)!''}</span>
+						</div></td>
+					<td style="width: 10%;"><a id="deleteId" href="/orderitem/deleteOrderItem?id=${(x.id)!''}"><input
+							type="button" value="删除"></a></td>
+				</tr>
+				<#assign total=total+x.subTotal >
+			  </#list>
+		</tbody>
+		   <#else>
+		   <span style="color: red;size: 20px;">购物车是空的，去书店看看吧！</span>
+		   </#if>
+	</table>
+	<br> <br> <br>
+	<span style="color: red;font-size: 20px;">${(session["msg"])!''}</span><br>
+	<div style="margin-left: 75%">
+	<#if (orderItemList)?? && (orderItemList?size>0)>
+		<span style="color: red; font-size: 24px;"><b>总费用：</b>￥${(total)!''}</span><br>
+		<br><a href="/orderitem/submitOrder"> <input type="button" value="提交订单" style="font-size: 22px; margin-left: 60px;"></a>
+	</#if>
+	</div>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+</div>
+</@layout>

@@ -1,0 +1,42 @@
+<#include "/WEB-INF/pages/common/_layout.html" /> <@layout>
+<script type="text/javascript">
+$(function(){
+	var stock="${(book.stock)!''}";
+	$('#booknum').keydown(function(){
+		return false;
+	});	
+	if(stock==0){
+		$('#booknum').attr("disabled",true);		
+		$('#detail_submit').attr("disabled",true);		
+	}else{
+		$('#booknum').attr("max",stock);		
+	}
+});
+</script>
+<form action="/addBooks" method="post">
+	<div
+		style="width: 70%; height: 400px; position: absolute; margin-left: 12%; border: solid 1px #ADADAD; background-color: #F0F0F0;">
+		<div
+			style="width: 40%; height: 400px; float: left;">
+			<img alt="" src="/images/books/${(book.pic)!'null.jpg'}"
+				style="width: 90%; height: 90%; margin: 5%;">
+		</div>
+		<input type="hidden" name="bid" value="${(book.bid)!''}">
+		<div
+			style="width: 60%; height: 400px; float: left;">
+			<div
+				style="width: 90%; height: 90%; margin: 5%; margin-left: 7%; margin-top: 10%;">
+				<h4>${(book.bname)!''}</h4>
+				<br> <span>${(book.author)!''} <b>著</b></span> <br> <br> <span><b>内容简介：</b></span>${(book.content)!''}
+				<br> <br> <span><b>服务：</b></span>由 三联书店发货并提供售后服务 <br>
+				<br> <span style="font-size: 20px; color: red;">￥${(book.price)!''}</span> <br>
+				<br> <input id="booknum" type="number" name="count" value="1" min="1" max=""
+					style="width: 40px; height: 20px" /> <span><b>库存：${(book.stock)!''}</b></span>
+				<br><br>
+				<input id="detail_submit" type="submit" value="加入购物车" style="width: 100px;height: 35px; cursor: pointer;">
+			</div>
+		</div>
+
+	</div>
+</form>
+</@layout>

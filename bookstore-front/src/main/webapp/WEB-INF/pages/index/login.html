@@ -1,0 +1,28 @@
+<#include "/WEB-INF/pages/common/_layout.html" /> <@layout>
+<script type="text/javascript">
+$(function(){
+	$('#login_reset').click(function(){
+		$('.login').each(function(){
+			$(this).val("");
+		});
+	});
+});
+</script>
+<div
+	style="margin-left: 30%; margin-top: 30px; width: 40%; height: 300px; border: solid 1px #ADADAD;">
+	<br>
+	<h1 style="margin-left: 40%">登&nbsp录</h1>
+	<form action="/login" method="post">
+		<div
+			style="width: 80%; height: 50%; margin-left: 15%; margin-top: 10%;">
+			<span style="font-size: 22px;"><b>用户名：</b></span><input type="text" class="login"
+				name="username" value="${(username)!''}" style="width: 180px; height: 20px;"><span style="color: red;">*</span><br>
+			<span style="font-size: 22px;"><b>密&nbsp码：</b></span><input class="login"
+				type="password" name="password" value="${(password)!''}" style="width: 180px; height: 20px;"><span style="color: red;">*</span><br><br>
+				<span style="color: red;font-size: 20px;margin-left: 85px;">${(msg)!''}</span><br><br>
+				<input type="submit" value="登录" style="width: 50px; height: 30px;margin-left: 28%">&nbsp
+				<input id="login_reset" type="button" value="重置" style="width: 50px; height: 30px">
+		</div>
+	</form>
+</div>
+</@layout>

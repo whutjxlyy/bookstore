@@ -1,0 +1,43 @@
+<#include "/WEB-INF/pages/common/_layout.html" /> <@layout>
+<script type="text/javascript">
+	$(function(){
+		$('#cancel').click(function(){
+			location="/book";
+		});
+	});
+</script>
+<div
+	style="margin-left: 15%; margin-top: 20px; width: 70%; height: 700px; border: solid 1px #ADADAD;">
+		当前位置：图书编辑
+	<hr>
+	<br>
+	<div style="width: 60%;margin-left: 20%;">
+	<h1 style="margin-left: 40%">编&nbsp辑</h1>
+		<form action="/book/saveBook" method="post" enctype="multipart/form-data">
+			<input type="hidden" name="book.bid" value="${(book.bid)!''}">
+			<div
+				style="width: 80%; height: 50%; margin-left: 15%; margin-top: 3%;">
+				<span style="font-size: 22px;"><b>图书名：</b></span><input type="text"
+					name="book.bname" value="${(book.bname)!''}" style="width: 180px; height: 20px;"><span style="color: red;">*</span><br><br>
+				<span style="font-size: 22px;"><b>价&nbsp格：</b></span><input
+					type="number" name="book.price" value="${(book.price)!''}" style="width: 180px; height: 20px;"><span style="color: red;">*</span><br><br>
+				<span style="font-size: 22px;"><b>作&nbsp者：</b></span><input
+					type="text" name="book.author" value="${(book.author)!''}" style="width: 180px; height: 20px;"><span style="color: red;">*</span><br><br>
+				<span style="font-size: 22px;"><b>简&nbsp介：</b></span><textarea rows="4" cols="23" name="book.content">${(book.content)!''}</textarea><span style="color: red;">*</span><br><br>
+				<span style="font-size: 22px;"><b>库&nbsp存：</b></span><input
+					type="number" name="book.stock" value="${(book.stock)!''}" min="0" style="width: 180px; height: 20px;"><span style="color: red;">*</span><br><br>
+					<div style="margin-left: 70px;">
+						<#if (book.pic)??>
+							<img alt="" src="/images/books/${(book.pic)!'null.jpg'}">
+						</#if>					
+					</div><br>
+				<span style="font-size: 22px;"><b>图&nbsp片：</b></span><input
+					type="file" name="book.pic" value="${(book.pic)!''}" style="width: 180px; height: 20px;"><span style="color: red;">*</span><br><br><br>
+					<input type="submit" value="提交" style="width: 50px; height: 30px;margin-left: 28%">&nbsp
+					<input type="button" id="cancel" value="取消" style="width: 50px; height: 30px"><br><br>
+					<span style="color: red;font-size: 20px;">${(msg)!''}</span>
+			</div>
+		</form>
+	</div>
+</div>
+</@layout>
